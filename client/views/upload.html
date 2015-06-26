@@ -1,0 +1,5 @@
+<template name="upload">
+  <div class="upload-wrap {{#if $not showUpload}}hide{{/if}}">
+    {{> dropzone url=uploadUrl id='dropzoneUpload'}}
+  </div>
+</template>

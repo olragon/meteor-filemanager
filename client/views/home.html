@@ -8,6 +8,23 @@
         {{/each}}
       </ol>
       
+      <div id="toolbar">
+        <div class="btn-group" role="group" aria-label="...">
+          <button class="btn btn-default newDir"><i class="fa fa-plus"></i> <i class="fa fa-folder"></i></button>
+          {{#if curDir.owner.write}}
+            <button class="btn btn-default upload"><i class="fa fa-upload"></i> <i class="fa fa-file"></i></button>
+          {{/if}}
+        </div>
+
+        {{#if $.Session.get 'newDir'}}
+          <input class="form-control input-xs newFolderName" placeholder="new folder"/>
+        {{/if}}
+
+        {{#if curDir.owner.write}}
+          {{> UI.dynamic template='upload' data=uploadData}}
+        {{/if}}
+      </div>
+
       <div>
         <input class="form-control input-xs search" placeholder="search in {{ rootDir }}"/>
       </div>
@@ -26,6 +43,7 @@
                 {{/if}}
               </td>
               <td class="file-actions">
+                <a href="#" class="text-danger delete" data-path={{ relativePath }} data-type={{ type }}><i class="fa fa fa-trash-o"></i></a>
                 {{#if $eq type 'file'}}
                   <a href="#" class="edit" data-path="{{ relativePath }}"><i class="fa fa-pencil"></i></a>
                   <a href="#" class="view" data-path="{{ relativePath }}"><i class="fa fa-eye"></i></a>
@@ -48,7 +66,9 @@
       </table>     
     </div>
     <div class="col-md-6" id="preview">
-      {{> editor}}
+      <div class="row">
+        {{> editor}}
+      </div>
     </div>
   </div>
 

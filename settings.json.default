@@ -1,5 +1,6 @@
 {
   "private": {
-    "rootDir": "/Users/long/Documents/www"
+    "rootDir": "/Users/long/Documents/www",
+    "newDirMode": 0777
   }
 }

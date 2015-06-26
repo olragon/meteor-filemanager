@@ -15,6 +15,7 @@ Router.map(function () {
     },
     onAfterAction: function () {
       Session.set('readFile', null);
+      Session.set('ui.showUpload', false);
     }
   });
 

@@ -1,4 +1,14 @@
+readDir = function (rootDir) {
+  Meteor.call('fm.ls', rootDir, function (err, result) {
+    console.log('readDir', rootDir, result.result);
+    Session.set('ls', result.result);
+  });
+}
+
 Template.home.helpers({
+  'curDir': function () {
+    return Session.get('curDir');
+  },
   'ls': function () {
     return Session.get('ls') || [];
   },
@@ -22,6 +32,11 @@ Template.home.helpers({
   },
   readFile: function () {
     return Session.get('readFile');
+  },
+  uploadData: function () {
+    return {
+      uploadUrl: '/upload/?uploadDir=' + Session.get('rootDir')
+    };
   }
 });
 
@@ -49,6 +64,38 @@ Template.home.events({
       return file;
     });
     Session.set('ls', files);
+  },
+  'click .upload': function () {
+    Session.set('ui.showUpload', !(Session.get('ui.showUpload') || false));
+    return false;
+  },
+  'click a.delete': function (evt) {
+    var $a = $(evt.currentTarget);
+    if (confirm('Delete ' + $a.data('path'))) {
+      Meteor.call('fm.rm', $a.data('path'), $a.data('type'), function (err) {
+        if (!err) {
+          readDir(Session.get('rootDir'));
+        } else {
+          alert(err);
+        }
+      });
+    }
+    return false;
+  },
+  'click .newDir': function () {
+    Session.set('newDir', !Session.get('newDir'));
+    return false;
+  },
+  'keypress input.newFolderName': function (evt) {
+    if (evt.currentTarget.value && evt.which === 13) {
+      Meteor.call('fm.mkdir', evt.currentTarget.value, function (err) {
+        if (!err) {
+          readDir(Session.get('rootDir'));
+          Session.set('newDir', false);
+        }
+      });
+      return false;
+    }
   }
 });
 
@@ -59,7 +106,10 @@ Template.home.rendered = function () {
 
 Deps.autorun(function () {
   var rootDir = Session.get('rootDir') || './';
-  Meteor.call('fm.ls', rootDir, function (err, result) {
-    Session.set('ls', result.result);
+  readDir(rootDir);
+  Meteor.call('fm.cur', rootDir, function (err, result) {
+    if (err) return;
+    console.log(rootDir, result.result);
+    Session.set('curDir', result.result);
   });
 });

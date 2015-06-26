@@ -114,11 +114,44 @@
         }
       }
     },
+    "busboy": {
+      "version": "http://registry.npmjs.org/busboy/-/busboy-0.2.9.tgz",
+      "dependencies": {
+        "dicer": {
+          "version": "http://registry.npmjs.org/dicer/-/dicer-0.2.3.tgz",
+          "dependencies": {
+            "streamsearch": {
+              "version": "http://registry.npmjs.org/streamsearch/-/streamsearch-0.1.2.tgz"
+            }
+          }
+        },
+        "readable-stream": {
+          "version": "1.1.13",
+          "dependencies": {
+            "core-util-is": {
+              "version": "1.0.1"
+            },
+            "isarray": {
+              "version": "0.0.1"
+            },
+            "string_decoder": {
+              "version": "0.10.31"
+            },
+            "inherits": {
+              "version": "2.0.1"
+            }
+          }
+        }
+      }
+    },
     "mime": {
       "version": "http://registry.npmjs.org/mime/-/mime-1.3.4.tgz"
     },
     "readdir-plus": {
       "version": "http://registry.npmjs.org/readdir-plus/-/readdir-plus-0.4.0.tgz"
+    },
+    "stat-mode": {
+      "version": "http://registry.npmjs.org/stat-mode/-/stat-mode-0.2.1.tgz"
     }
   }
 }
