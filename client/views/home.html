@@ -7,10 +7,15 @@
           <li><a href="/?currentDir={{ encodeUri path }}" data-path="{{ path }}">{{ name }}</a></li>  
         {{/each}}
       </ol>
+      
+      <div>
+        <input class="form-control input-xs search" placeholder="search in {{ rootDir }}"/>
+      </div>
+
       <table class="table table-hover table-condensed">
         <tbody>
           {{#each ls}}
-            <tr>
+            <tr class="{{#if _hide}}hide{{/if}}">
               <td>
                 {{#if $eq type 'directory'}}
                   <i class="fa fa-folder"></i>
@@ -42,7 +47,7 @@
         </tbody>
       </table>     
     </div>
-    <div class="col-md-6">
+    <div class="col-md-6" id="preview">
       {{> editor}}
     </div>
   </div>

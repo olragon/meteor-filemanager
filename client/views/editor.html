@@ -1,16 +1,43 @@
 <template name="editor">
-  <div class="row">
-    <div class="col-md-6">
-      {{ file.relativePath }}
-    </div>
-    <div class="col-md-6">
-      <span class="pull-right text-muted">{{ numeral file.stat.size '0[.]0 b' }}</span>
-    </div>
-  </div>
 
-  <div class="row">
-    <div class="editor-wrap {{ isHidden }}">
-      {{> mandrill_ace }}
+  {{#with file}}
+    <div class="row">
+      <div class="col-md-10">
+        {{ relativePath }}
+      </div>
+      <div class="col-md-2">
+        <span class="pull-right text-muted">{{ numeral stat.size '0[.]0 b' }}</span>
+      </div>
     </div>
-  </div>
+    
+    <div class="row">
+      {{#if $match mime '^image'}}
+        {{> editor_image this}}
+      {{else}}
+        {{#if $match mime 'pdf'}}
+          {{> editor_pdf this}}
+        {{else}}
+          {{#if canUseEditor this}}
+              <div class="editor-wrap {{ isHidden }}">
+                {{> mandrill_ace }}
+              </div>
+          {{else}}
+            <a href="/download/?file={{ relativePath }}">Download</a>
+          {{/if}}
+        {{/if}}
+      {{/if}}
+    </div>
+  {{/with}}
+
+
+</template>
+
+
+<template name="editor_image">
+  <a href="/download/?direct=1&file={{ relativePath }}"><img class="thumbnail img-responsive" src="/download/?direct=1&file={{ relativePath }}"></a>
+</template>
+
+
+<template name="editor_pdf">
+  <iframe src="/download/?direct=1&file={{ relativePath }}" width="100%" height="100%"></iframe>
 </template>

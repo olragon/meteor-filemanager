@@ -13,6 +13,7 @@ var rootDir = Meteor.settings.private.rootDir;
 Router.route('/download', function () {
   var self = this;
   var file = self.request.query.file;
+  var direct = self.request.query.direct || false;
   check(file, String);
 
   var realFile = Path.join(rootDir, file);
@@ -21,9 +22,12 @@ Router.route('/download', function () {
     if (stats.isFile()) {
       var fileName = Path.basename(realFile);
       var mime = Mime.lookup(fileName);
-      self.response.setHeader('Content-disposition', 'attachment; filename=' + fileName);
-      self.response.setHeader('Content-type', mime);
-      self.response.setHeader('Content-length', stats.size);
+      // download
+      if (!direct) {
+        self.response.setHeader('Content-disposition', 'attachment; filename=' + fileName);
+        self.response.setHeader('Content-type', mime);
+        self.response.setHeader('Content-length', stats.size);
+      }
 
       fs.createReadStream(realFile, {
         'bufferSize': 4 * 1024
@@ -39,6 +43,4 @@ Router.route('/download', function () {
       archiver.pipe(self.response);
     }
   });
-
-
 }, { where: 'server' });

@@ -12,6 +12,7 @@ Template.editor.helpers({
 });
 
 Template.editor.rendered = function () {
+  var self = this;
   MandrillAce.getInstance().setTheme('ace/theme/monokai');
 
   Deps.autorun(function () {
@@ -21,7 +22,7 @@ Template.editor.rendered = function () {
     var path = file.relativePath;
     var editor = MandrillAce.getInstance();
 
-    if (path && editor) {
+    if (path && editor && canUseEditor(file)) {
       Meteor.call('fm.read', path, function (err, output) {
         if (!err) {
           editor.detectMode(path);
@@ -30,4 +31,8 @@ Template.editor.rendered = function () {
       });
     }
   });
+}
+
+Template.editor_pdf.rendered = function () {
+  $(this.find('iframe')).height($(document).height());
 }
