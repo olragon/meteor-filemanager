@@ -1,0 +1,53 @@
+<template name="home">
+  
+  <div class="row">
+    <div class="col-md-6">
+      <ol class="breadcrumb">
+        {{#each breadcrumb}}
+          <li><a href="/?currentDir={{ encodeUri path }}" data-path="{{ path }}">{{ name }}</a></li>  
+        {{/each}}
+      </ol>
+      <table class="table table-hover table-condensed">
+        <tbody>
+          {{#each ls}}
+            <tr>
+              <td>
+                {{#if $eq type 'directory'}}
+                  <i class="fa fa-folder"></i>
+                  <a href="/?currentDir={{ encodeUri relativePath }}" data-path="{{ relativePath }}">{{name}}</a>
+                {{else}}
+                  <i class="fa fa-file"></i>
+                  <a href="#" class="view" data-path="{{ relativePath }}">{{name}}</a>
+                {{/if}}
+              </td>
+              <td class="file-actions">
+                {{#if $eq type 'file'}}
+                  <a href="#" class="edit" data-path="{{ relativePath }}"><i class="fa fa-pencil"></i></a>
+                  <a href="#" class="view" data-path="{{ relativePath }}"><i class="fa fa-eye"></i></a>
+                {{else}}
+                  <span class="text-muted">
+                    <i class="fa fa-pencil"></i>
+                    <i class="fa fa-eye"></i>
+                  </span>
+                {{/if}}
+                <a href="/download?file={{ encodeUri relativePath }}" target="_blank"><i class="fa fa-download"></i></a>
+              </td>
+              <td class="file-size">
+                <span class="pull-right text-muted">
+                  {{ numeral stat.size '0[.]0 b' }}
+                </span>          
+              </td>
+            </tr>
+          {{/each}}
+        </tbody>
+      </table>     
+    </div>
+    <div class="col-md-6">
+      {{> editor}}
+    </div>
+  </div>
+
+
+
+
+</template>
