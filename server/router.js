@@ -6,7 +6,9 @@ var Mime = Meteor.npmRequire('mime');
 var Busboy = Meteor.npmRequire('busboy');
 
 var rootDir = Meteor.settings.private.rootDir;
+var maxFileSize = Meteor.settings.private.maxFileSize || '100mb';
 
+Router.onBeforeAction(Iron.Router.bodyParser.json({limit: maxFileSize}));
 
 /**
  * Download file or ziped folder

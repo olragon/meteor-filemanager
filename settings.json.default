@@ -1,6 +1,7 @@
 {
   "private": {
-    "rootDir": "/Users/long/Documents/www",
-    "newDirMode": 0777
+    "rootDir": "/data/public",
+    "newDirMode": "0777",
+    "maxFileSize": "100mb"
   }
 }
