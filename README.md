@@ -1,6 +1,8 @@
 FileManager
 ===
 
+
+
 File manager for intranet.
 
 ## Feautures
@@ -28,3 +30,7 @@ File manager for intranet.
 ## Run
 
 - cd filemanager & meteor --settings=settings.json
+
+## Screenshot
+
+[Meteor FileManager](http://i.imgur.com/R0UkfgZ.png)
