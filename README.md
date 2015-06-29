@@ -33,4 +33,4 @@ File manager for intranet.
 
 ## Screenshot
 
-[Meteor FileManager](http://i.imgur.com/R0UkfgZ.png)
+![Meteor FileManager](http://i.imgur.com/R0UkfgZ.png "Meteor FileManager")
